@@ -42,3 +42,5 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2022-09-01'
     }
   }
 }
+
+output fqdn string = containerGroup.properties.ipAddress.fqdn
