@@ -1,3 +1,5 @@
+cd reactapp-serve
+
 #Node18 base image, serve 14
 docker build . -t ghcr.io/gordonby/gordsnodeserveapp:n18s14port3000
 
