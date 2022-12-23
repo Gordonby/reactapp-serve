@@ -1,8 +1,11 @@
 # reactapp-serve
 
+This repo uses a standard react app that uses [serve](https://github.com/vercel/serve-handler).
+Container images 
+
 ## first time setup
 
-These are the commands run to get a functioning, served react app.
+These are the commands that i used to  get a functioning, served react app.
 
 ```bash
 npx create-react-app reactapp-serve
@@ -13,7 +16,13 @@ npm i --save serve
 npm run publish
 ```
 
+I then created a [Dockerfile](reactapp-serve/Dockerfile) for the app which takes 2 build args to vary the node base image and the port.
+
 ## Deploying the container
+
+There are a lot of Azure services that can host a container.
+In the bicep directory, i've created the Infrastructure as Code files for each.
+The scripts below simply initiate a deployment using those files.
 
 ### Azure Container Instances
 
@@ -52,6 +61,14 @@ az aks get-credentials -g innerloop -n aks-reactserve --admin --overwrite-existi
 
 kubectl run react-serve --image=ghcr.io/gordonby/gordsnodeserveapp:n18s14port1025 --port 1025
 kubectl expose pod react-serve --port=80 --type=LoadBalancer --target-port=1025
+```
+
+### Azure Spring Apps
+
+> The IaC for Spring apps is Currently a `work in progress`
+
+```bash
+az deployment group create -g innerloop -f .\bicep\springapps.bicep
 ```
 
 ## Deploying to other non-containerised hosting services
