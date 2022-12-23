@@ -33,3 +33,29 @@ az deployment group create -g innerloop -f .\containerApp.bicep
 
 az deployment group create -g innerloop -f .\containerApp.bicep -p containerImage=ghcr.io/gordonby/gordsnodeserveapp:n18s14port1025 targetPort=1025
 ```
+
+### Azure Web App for Container
+
+```bash
+az deployment group create -g innerloop -f .\bicep\webApp-Container.bicep
+
+az deployment group create -g innerloop -f .\bicep\webApp-Container.bicep -p containerImage=ghcr.io/gordonby/gordsnodeserveapp:n18s14port1025 port=1025 nameseed=reactserve1025
+```
+
+### Azure Kubernetes Service
+
+```bash
+# Deploy template with in-line parameters
+az deployment group create -g innerloop  --template-uri https://github.com/Azure/AKS-Construction/releases/download/0.9.6/main.json -p resourceName=reactserve JustUseSystemPool=true
+
+az aks get-credentials -g innerloop -n aks-reactserve --admin --overwrite-existing
+
+kubectl run react-serve --image=ghcr.io/gordonby/gordsnodeserveapp:n18s14port1025 --port 1025
+kubectl expose pod react-serve --port=80 --type=LoadBalancer --target-port=1025
+```
+
+## Deploying to other non-containerised hosting services
+
+In order to deploy without a container, there needs to be a build step where serve will create the static assets.
+
+Viable Azure services would include Azure Static Web Apps and Azure Web Apps.
