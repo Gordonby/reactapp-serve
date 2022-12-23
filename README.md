@@ -1,7 +1,10 @@
 # reactapp-serve
 
 This repo uses a standard react app that uses [serve](https://github.com/vercel/serve-handler).
-Container images 
+Container images are hosted here;
+
+- ghcr.io/gordonby/gordsnodeserveapp:n18s14port3000
+- ghcr.io/gordonby/gordsnodeserveapp:n18s14port1025
 
 ## first time setup
 
